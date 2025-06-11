@@ -1,0 +1,350 @@
+\documentclass[12pt,a4paper,UTF8,oneside]{ctexbook}
+
+% 包引入
+\usepackage{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{afterpage}
+
+% 页面设置
+\geometry{
+    left=2.5cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm,
+    headheight=1cm,
+    headsep=0.5cm,
+    footskip=1cm
+}
+
+% 控制分页
+\raggedbottom
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% 颜色定义
+\definecolor{maincolor}{RGB}{108,129,147}      % 柔和蓝灰色
+\definecolor{accentcolor}{RGB}{136,155,139}    % 柔和薄荷绿
+\definecolor{warningcolor}{RGB}{194,150,130}   % 柔和暖橙色
+\definecolor{dangercolor}{RGB}{180,142,142}    % 柔和玫瑰色
+\definecolor{lightgray}{RGB}{248,249,250}      % 更浅的灰色
+
+% 标题样式设置
+\titleformat{\chapter}[block]
+{\LARGE\bfseries\color{maincolor}}
+{\thechapter}
+{1em}
+{\rule{\textwidth}{2pt}\vspace{-0.5em}\\\LARGE}
+[\vspace{-0.8em}\rule{\textwidth}{1pt}]
+
+\titlespacing*{\chapter}{0pt}{20pt}{30pt}
+
+\titleformat{\section}[block]
+{\Large\bfseries\color{maincolor}}
+{\thesection}
+{1em}
+{}
+
+\titlespacing*{\section}{0pt}{20pt}{15pt}
+
+\titleformat{\subsection}[block]
+{\large\bfseries\color{accentcolor}}
+{\thesubsection}
+{1em}
+{}
+
+\titlespacing*{\subsection}{0pt}{15pt}{10pt}
+
+% 页眉页脚设置
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{maincolor}\bfseries\leftmark}
+\fancyhead[R]{\color{maincolor}\bfseries 高中习题集}
+\fancyfoot[C]{\color{maincolor}\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{maincolor}\leaders\hrule height \headrulewidth\hfill}}
+
+% 设置章节页样式
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\color{maincolor}\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% 超链接设置
+\hypersetup{
+    colorlinks=true,
+    linkcolor=maincolor,
+    urlcolor=maincolor,
+    citecolor=maincolor,
+    bookmarksnumbered=true
+}
+
+% 定义习题盒子样式
+\tcbuselibrary{most}
+
+% 主要习题盒子
+\newtcolorbox{exercise}[2][]{
+    enhanced,
+    colback=white,
+    colframe=maincolor,
+    boxrule=1pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=8pt,
+    bottom=8pt,
+    fonttitle=\bfseries\color{white},
+    title=习题 #2,
+    coltitle=white,
+    colbacktitle=maincolor,
+    attach boxed title to top left={yshift=-2mm,xshift=3mm},
+    boxed title style={
+        arc=2pt,
+        boxrule=0pt
+    },
+    #1
+}
+
+% 重点习题盒子
+\newtcolorbox{importantexercise}[2][]{
+    enhanced,
+    colback=accentcolor!5,
+    colframe=accentcolor,
+    boxrule=1.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=8pt,
+    bottom=8pt,
+    fonttitle=\bfseries\color{white},
+    title=★ 重点习题 #2,
+    coltitle=white,
+    colbacktitle=accentcolor,
+    attach boxed title to top left={yshift=-2mm,xshift=3mm},
+    boxed title style={
+        arc=2pt,
+        boxrule=0pt
+    },
+    #1
+}
+
+% 难题盒子
+\newtcolorbox{challengeexercise}[2][]{
+    enhanced,
+    colback=warningcolor!5,
+    colframe=warningcolor,
+    boxrule=1.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=8pt,
+    bottom=8pt,
+    fonttitle=\bfseries\color{white},
+    title=★★ 挑战题 #2,
+    coltitle=white,
+    colbacktitle=warningcolor,
+    attach boxed title to top left={yshift=-2mm,xshift=3mm},
+    boxed title style={
+        arc=2pt,
+        boxrule=0pt
+    },
+    #1
+}
+
+% 答案盒子
+\newtcolorbox{answer}[1][]{
+    enhanced,
+    colback=lightgray,
+    colframe=maincolor!30,
+    boxrule=0.5pt,
+    arc=2pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries\color{maincolor!70},
+    title=参考答案,
+    coltitle=maincolor!70,
+    #1
+}
+
+% 提示盒子
+\newtcolorbox{hint}[1][]{
+    enhanced,
+    colback=maincolor!8,
+    colframe=maincolor!40,
+    boxrule=0.8pt,
+    arc=2pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries\color{maincolor!80},
+    title=�� 提示,
+    coltitle=maincolor!80,
+    #1
+}
+
+% 知识点盒子
+\newtcolorbox{knowledge}[1][]{
+    enhanced,
+    colback=accentcolor!8,
+    colframe=accentcolor!50,
+    boxrule=0.8pt,
+    arc=2pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries\color{accentcolor!80},
+    title=�� 知识点,
+    coltitle=accentcolor!80,
+    #1
+}
+
+% 自定义命令 - 使用简单变量定义
+\newcommand{\mysubject}{数学}
+\newcommand{\mygrade}{高一}
+\newcommand{\mysemester}{上学期}
+\newcommand{\myteacher}{教师姓名}
+\newcommand{\myschool}{学校名称}
+
+% 重定义命令用于修改变量
+\newcommand{\subject}[1]{\renewcommand{\mysubject}{#1}}
+\newcommand{\grade}[1]{\renewcommand{\mygrade}{#1}}
+\newcommand{\semester}[1]{\renewcommand{\mysemester}{#1}}
+\newcommand{\teacher}[1]{\renewcommand{\myteacher}{#1}}
+\newcommand{\school}[1]{\renewcommand{\myschool}{#1}}
+
+% 封面设计
+\newcommand{\makecover}{
+    \begin{titlepage}
+        \centering
+        \vspace*{2cm}
+        
+        % 顶部装饰
+        \begin{tikzpicture}
+            \draw[maincolor, line width=3pt] (0,0) -- (10,0);
+            \draw[accentcolor, line width=2pt] (0,-0.3) -- (8,{-0.3});
+        \end{tikzpicture}
+        
+        \vspace{1cm}
+        
+        % 标题
+        {\Huge\bfseries\color{maincolor} \mysubject 习题集}
+        
+        \vspace{0.5cm}
+        
+        {\Large\color{gray} Exercise Collection}
+        
+        \vspace{2cm}
+        
+        % 信息框
+        \begin{tcolorbox}[
+            enhanced,
+            colback=lightgray,
+            colframe=maincolor,
+            boxrule=2pt,
+            arc=5pt,
+            width=0.8\textwidth,
+            center,
+            fonttitle=\Large\bfseries
+        ]
+            \centering
+            \large
+            \textbf{年级：}\mygrade \quad \textbf{学期：}\mysemester \\[0.8cm]
+            \textbf{学校：}\myschool \\[0.5cm]
+            \textbf{教师：}\myteacher \\[0.5cm]
+            \textbf{编制日期：}\today
+        \end{tcolorbox}
+        
+        \vfill
+        
+        % 底部装饰
+        \begin{tikzpicture}
+            \draw[accentcolor, line width=2pt] (0,0) -- (8,0);
+            \draw[maincolor, line width=3pt] (0,0.3) -- (10,0.3);
+        \end{tikzpicture}
+        
+    \end{titlepage}
+    \clearpage
+}
+
+% 目录样式
+\renewcommand{\contentsname}{\color{maincolor}\Large 目\quad 录}
+
+% 开始文档
+\begin{document}
+
+% 生成封面
+\makecover
+
+% 目录
+\tableofcontents
+\clearpage
+
+% ==================== 正文内容开始 ====================
+% 每章内容使用单独文件管理
+
+% 方法一：使用 \input 包含子文件（推荐）
+\input{chapters/chapter01}  % 第一章：函数与方程
+% \input{chapters/chapter02}  % 第二章：三角函数
+% \input{chapters/chapter03}  % 第三章：数列（可注释掉暂不编译）
+% \input{chapters/chapter04}  % 第四章：不等式
+
+% 方法二：使用 \include 包含子文件（会强制分页）
+% \include{chapters/chapter01}
+% \include{chapters/chapter02}
+
+% 如果使用 subfiles 包（需要特殊设置，见说明）
+% \subfile{chapters/chapter01}
+% \subfile{chapters/chapter02}
+
+% ==================== 附录 ====================
+
+\appendix
+
+\chapter{答案汇总}
+
+\section{第一章答案}
+\begin{enumerate}
+    \item $f(3) = 7$
+    \item $x < -6$
+    \item 最小值为 $0$，当 $x = 1$ 时取得
+    \item 证明略（见详细解答）
+\end{enumerate}
+
+\section{第二章答案}
+\begin{enumerate}
+    \item $\sin 30° + \cos 60° = 1$
+\end{enumerate}
+
+\chapter{公式汇总}
+
+\section{基本函数}
+\begin{itemize}
+    \item 一次函数：$f(x) = kx + b$ (k ≠ 0)
+    \item 二次函数：$f(x) = ax^2 + bx + c$ (a ≠ 0)
+    \item 反比例函数：$f(x) = \frac{k}{x}$ (k ≠ 0)
+\end{itemize}
+
+\section{三角函数}
+\begin{itemize}
+    \item 正弦函数：$y = \sin x$
+    \item 余弦函数：$y = \cos x$
+    \item 正切函数：$y = \tan x$
+\end{itemize}
+
+\end{document}
